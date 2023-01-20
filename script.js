@@ -25,7 +25,6 @@ const blackPieces = {
 
 function disposePiece (row, col, piece) {
     const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
-    console.log(square);
     const squareClass = document.querySelector(`td.${square}`);
     const squareButton = document.createElement('button');
     squareButton.innerHTML = piece;
@@ -71,8 +70,6 @@ for (let row = 7; row >= 6; row--) {
 }
 
 const button = document.querySelectorAll('button');
-
-console.log(button);
 
 for (let i = 0; i < button.length; i++) {
     button[i].addEventListener('click', function highlight() {
