@@ -23,29 +23,54 @@ const blackPieces = {
     king: '&#x265A;'
 };
 
-function disposePiece (row, col, piece) {
+function disposeWhitePiece (row, col, piece) {
     const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
     const squareClass = document.querySelector(`td.${square}`);
     const squareButton = document.createElement('button');
-    squareButton.innerHTML = piece;
+    squareButton.innerHTML = whitePieces[piece];
+    squareButton.classList.add('white');
+    squareButton.classList.add(piece);
     squareClass.appendChild(squareButton);
+}
+
+function disposeBlackPiece (row, col, piece) {
+    const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
+    const squareClass = document.querySelector(`td.${square}`);
+    const squareButton = document.createElement('button');
+    squareButton.innerHTML = blackPieces[piece];
+    squareButton.classList.add('black');
+    squareButton.classList.add(piece);
+    squareClass.appendChild(squareButton);
+}
+
+function makeEmpty (row, col) {
+    const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
+    const squareClass = document.querySelector(`td.${square}`);
+    squareClass.classList.add('empty');
+}
+
+
+for (let row = 2; row <= 5; row++) {
+    for (let col = 0; col < 8; col++) {
+        makeEmpty (row, col);
+    }
 }
 
 for (let row = 0; row <= 1; row++) {
     for (let col = 0; col < 8; col++) {
         if (row === 0) {
             if (col === 0 || col === 7)
-                disposePiece (row, col, whitePieces.rook);
+                disposeWhitePiece (row, col, 'rook');
             else if (col === 1 || col === 6)
-                disposePiece (row, col, whitePieces.knight);
+                disposeWhitePiece (row, col, 'knight');
             else if (col === 2 || col === 5)
-                disposePiece (row, col, whitePieces.bishop);
+                disposeWhitePiece (row, col, 'bishop');
             else if (col === 3)
-                disposePiece (row, col, whitePieces.king);
+                disposeWhitePiece (row, col, 'king');
             else
-                disposePiece (row, col, whitePieces.queen);
+                disposeWhitePiece (row, col, 'queen');
         } else {
-            disposePiece (row, col, whitePieces.pawn);
+                disposeWhitePiece (row, col, 'pawn');
         }
     }
 }
@@ -54,17 +79,17 @@ for (let row = 7; row >= 6; row--) {
     for (let col = 0; col < 8; col++) {
         if (row === 7) {
             if (col === 0 || col === 7)
-                disposePiece (row, col, blackPieces.rook);
+                disposeBlackPiece (row, col, 'rook');
             else if (col === 1 || col === 6)
-                disposePiece (row, col, blackPieces.knight);
+                disposeBlackPiece (row, col, 'knight');
             else if (col === 2 || col === 5)
-                disposePiece (row, col, blackPieces.bishop);
+                disposeBlackPiece (row, col, 'bishop');
             else if (col === 3)
-                disposePiece (row, col, blackPieces.king);
+                disposeBlackPiece (row, col, 'king');
             else
-                disposePiece (row, col, blackPieces.queen);
+                disposeBlackPiece (row, col, 'queen');
         } else {
-            disposePiece (row, col, blackPieces.pawn);
+            disposeBlackPiece (row, col, 'pawn');
         }
     }
 }
