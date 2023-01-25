@@ -20,11 +20,11 @@ td {
     font-size: 64px;
 }
 
-.red {
+.selected {
     color: red;
 }
 
-.red:hover {
+.selected:hover {
     color: red;
 }
 
@@ -37,7 +37,7 @@ td button {
     border: none;
 }
 
-td button:hover {
+.hover:hover {
     color: green;
     cursor: pointer;
 }

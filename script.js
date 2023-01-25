@@ -1,8 +1,8 @@
 window.onload;
 
 const chessBoard = [
-    [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' ],
-    [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+    ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
+    [1, 2, 3, 4, 5, 6, 7, 8]
 ];
 
 const whitePieces = {
@@ -23,7 +23,10 @@ const blackPieces = {
     king: '&#x265A;'
 };
 
-function disposeWhitePiece (row, col, piece) {
+// fonctions et boucles qui "placent" les pièces blanches et noires sur le plateau (classes css 'white' et 'black')
+// ainsi que les cases vides (classe 'empty')
+
+function disposeWhitePiece(row, col, piece) {
     const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
     const squareClass = document.querySelector(`td.${square}`);
     const squareButton = document.createElement('button');
@@ -33,7 +36,7 @@ function disposeWhitePiece (row, col, piece) {
     squareClass.appendChild(squareButton);
 }
 
-function disposeBlackPiece (row, col, piece) {
+function disposeBlackPiece(row, col, piece) {
     const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
     const squareClass = document.querySelector(`td.${square}`);
     const squareButton = document.createElement('button');
@@ -43,35 +46,34 @@ function disposeBlackPiece (row, col, piece) {
     squareClass.appendChild(squareButton);
 }
 
-function makeEmpty (row, col) {
+function makeEmpty(row, col) {
     const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
     const squareClass = document.querySelector(`td.${square}`);
     squareClass.classList.add('empty');
-}
-
-
-for (let row = 2; row <= 5; row++) {
-    for (let col = 0; col < 8; col++) {
-        makeEmpty (row, col);
-    }
 }
 
 for (let row = 0; row <= 1; row++) {
     for (let col = 0; col < 8; col++) {
         if (row === 0) {
             if (col === 0 || col === 7)
-                disposeWhitePiece (row, col, 'rook');
+                disposeWhitePiece(row, col, 'rook');
             else if (col === 1 || col === 6)
-                disposeWhitePiece (row, col, 'knight');
+                disposeWhitePiece(row, col, 'knight');
             else if (col === 2 || col === 5)
-                disposeWhitePiece (row, col, 'bishop');
+                disposeWhitePiece(row, col, 'bishop');
             else if (col === 3)
-                disposeWhitePiece (row, col, 'king');
+                disposeWhitePiece(row, col, 'king');
             else
-                disposeWhitePiece (row, col, 'queen');
+                disposeWhitePiece(row, col, 'queen');
         } else {
-                disposeWhitePiece (row, col, 'pawn');
+            disposeWhitePiece(row, col, 'pawn');
         }
+    }
+}
+
+for (let row = 2; row <= 5; row++) {
+    for (let col = 0; col < 8; col++) {
+        makeEmpty(row, col);
     }
 }
 
@@ -79,28 +81,48 @@ for (let row = 7; row >= 6; row--) {
     for (let col = 0; col < 8; col++) {
         if (row === 7) {
             if (col === 0 || col === 7)
-                disposeBlackPiece (row, col, 'rook');
+                disposeBlackPiece(row, col, 'rook');
             else if (col === 1 || col === 6)
-                disposeBlackPiece (row, col, 'knight');
+                disposeBlackPiece(row, col, 'knight');
             else if (col === 2 || col === 5)
-                disposeBlackPiece (row, col, 'bishop');
+                disposeBlackPiece(row, col, 'bishop');
             else if (col === 3)
-                disposeBlackPiece (row, col, 'king');
+                disposeBlackPiece(row, col, 'king');
             else
-                disposeBlackPiece (row, col, 'queen');
+                disposeBlackPiece(row, col, 'queen');
         } else {
-            disposeBlackPiece (row, col, 'pawn');
+            disposeBlackPiece(row, col, 'pawn');
         }
     }
 }
 
-const button = document.querySelectorAll('button');
+let turn = 0;
 
-for (let i = 0; i < button.length; i++) {
-    button[i].addEventListener('click', function highlight() {
-        for (let j = 0; j < button.length; j++) {
-            button[j].classList.remove('red');
-        }
-    button[i].classList.add('red');
+const whiteButton = document.querySelectorAll('.white');
+const blackButton = document.querySelectorAll('.black');
+
+if (turn % 2 == 0) {
+    whiteButton.forEach(element => {
+        element.addEventListener('mouseover', () => {
+            element.classList.add('hover');
+        })
+        element.addEventListener('click', () => {
+            whiteButton.forEach(element => {
+                element.classList.remove('selected');
+            })
+            element.classList.add('selected');
+        })
+    });
+} else {
+    blackButton.forEach(element => {
+        element.addEventListener('mouseover', () => {
+            element.classList.add('hover');
+        })
+        element.addEventListener('click', () => {
+            blackButton.forEach(element => {
+                element.classList.remove('selected');
+            })
+            element.classList.add('selected');
+        })
     });
 }
