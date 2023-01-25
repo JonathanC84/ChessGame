@@ -103,9 +103,6 @@ const blackButton = document.querySelectorAll('.black');
 
 if (turn % 2 == 0) {
     whiteButton.forEach(element => {
-        element.addEventListener('mouseover', () => {
-            element.classList.add('hover');
-        })
         element.addEventListener('click', () => {
             whiteButton.forEach(element => {
                 element.classList.remove('selected');
@@ -115,9 +112,6 @@ if (turn % 2 == 0) {
     });
 } else {
     blackButton.forEach(element => {
-        element.addEventListener('mouseover', () => {
-            element.classList.add('hover');
-        })
         element.addEventListener('click', () => {
             blackButton.forEach(element => {
                 element.classList.remove('selected');
