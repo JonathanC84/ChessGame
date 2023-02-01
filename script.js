@@ -96,30 +96,43 @@ for (let row = 7; row >= 6; row--) {
     }
 }
 
-let turn = 1;
+let turn = 0;
 
 const whiteButton = document.querySelectorAll('.white');
 const blackButton = document.querySelectorAll('.black');
+
+
+function selectPiece (buttonObject) {
+    buttonObject.forEach(element => {
+        element.addEventListener('click', () => {
+            buttonObject.forEach(element => {
+                element.classList.remove('selected');
+            })
+            element.classList.add('selected');
+            movePiece(element);
+        });
+    });
+}
+
+function movePiece (piece) {
+    let type = piece.classList;
+    if (type.contains('pawn')) {
+        movePawn(piece);
+    }
+}
+
+function movePawn (pawn) {
+    let location = [pawn.parentElement.classList[0][0], pawn.parentElement.classList[0][1]];
+    console.log(location);
+}
+
+
 while (turn != -1) {
     if (turn % 2 == 0) {
-        whiteButton.forEach(element => {
-            element.addEventListener('click', () => {
-                whiteButton.forEach(element => {
-                    element.classList.remove('selected');
-                })
-                element.classList.add('selected');
-            })
-        });
+        selectPiece(whiteButton);
         break;
     } else {
-        blackButton.forEach(element => {
-            element.addEventListener('click', () => {
-                blackButton.forEach(element => {
-                    element.classList.remove('selected');
-                })
-                element.classList.add('selected');
-            })
-        });
+        selectPiece(blackButton);
         break;
     }
 }
