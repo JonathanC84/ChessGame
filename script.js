@@ -96,27 +96,30 @@ for (let row = 7; row >= 6; row--) {
     }
 }
 
-let turn = 0;
+let turn = 1;
 
 const whiteButton = document.querySelectorAll('.white');
 const blackButton = document.querySelectorAll('.black');
-
-if (turn % 2 == 0) {
-    whiteButton.forEach(element => {
-        element.addEventListener('click', () => {
-            whiteButton.forEach(element => {
-                element.classList.remove('selected');
+while (turn != -1) {
+    if (turn % 2 == 0) {
+        whiteButton.forEach(element => {
+            element.addEventListener('click', () => {
+                whiteButton.forEach(element => {
+                    element.classList.remove('selected');
+                })
+                element.classList.add('selected');
             })
-            element.classList.add('selected');
-        })
-    });
-} else {
-    blackButton.forEach(element => {
-        element.addEventListener('click', () => {
-            blackButton.forEach(element => {
-                element.classList.remove('selected');
+        });
+        break;
+    } else {
+        blackButton.forEach(element => {
+            element.addEventListener('click', () => {
+                blackButton.forEach(element => {
+                    element.classList.remove('selected');
+                })
+                element.classList.add('selected');
             })
-            element.classList.add('selected');
-        })
-    });
+        });
+        break;
+    }
 }
