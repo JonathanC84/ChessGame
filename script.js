@@ -5,7 +5,7 @@ const length = 64;
 const chessBoard = Array(length).fill(0);
 
 for (let i = 0; i < length; i++) {
-    chessBoard[i] = i+1;
+    chessBoard[i] = i + 1;
 }
 
 const whitePieces = {
@@ -48,6 +48,16 @@ function makeEmpty(squareIdArray) {
     }
 }
 
+function markAsPossibleMove (squareIdArray) {
+    for (let i = 0; i < squareIdArray.length; i++) {
+        const square = document.getElementById(squareIdArray[i]);
+        const squareButton = document.createElement('button');
+        squareButton.innerHTML = '&bull;';
+        squareButton.classList.add('touchable');
+        square.appendChild(squareButton);
+    }
+}
+
 arrangeBoard([1, 8], whitePieces, 'rook');
 arrangeBoard([2, 7], whitePieces, 'knight');
 arrangeBoard([3, 6], whitePieces, 'bishop');
@@ -65,7 +75,7 @@ arrangeBoard([49, 50, 51, 52, 53, 54, 55, 56], blackPieces, 'pawn');
 const emptySquaresId = Array(32).fill(0);
 
 for (let i = 0; i < emptySquaresId.length; i++) {
-    emptySquaresId[i] = 17+i;
+    emptySquaresId[i] = 17 + i;
 }
 
 makeEmpty(emptySquaresId);
@@ -73,40 +83,35 @@ makeEmpty(emptySquaresId);
 const whiteButton = document.querySelectorAll('.white');
 const blackButton = document.querySelectorAll('.black');
 
-function selectPiece (buttonObject) {
+function selectPiece(buttonObject) {
     buttonObject.forEach(element => {
         element.classList.add('selectable');
         element.addEventListener('click', () => {
+            
             buttonObject.forEach(element => {
                 element.classList.remove('selected');
             })
+            makeEmpty(emptySquaresId);
             element.classList.remove('selectable');
             element.classList.add('selected');
-            switch (getPieceName(element)) {
-                case 'king': alert('king'); break;
-                case 'queen': alert('queen'); break;
-                case 'rook': alert('rook'); break;
-                case 'knight': alert('knight'); break;
-                case 'bishop': alert('bishop'); break;
-                case 'pawn': alert('pawn'); break;
-            }
+            let location = parseInt(element.parentElement.id);
+            console.log(location);
+            if (element.classList.contains('king'))
+                alert('king');
+            else if (element.classList.contains('queen'))
+                alert('queen');
+            else if (element.classList.contains('rook'))
+                alert('rook');
+            else if (element.classList.contains('knight'))
+                alert('knight');
+            else if (element.classList.contains('bishop'))
+                alert('bishop');
+            else {
+                    let idArray = [location+8];
+                    markAsPossibleMove(idArray);
+                }                
         });
     });
-}
-
-function getPieceName (element) {
-    if (element.classList.contains('king'))
-        return 'king';
-    else if (element.classList.contains('queen'))
-        return 'queen';
-    else if (element.classList.contains('rook'))
-        return 'rook';
-    else if (element.classList.contains('knight'))
-        return 'knight';
-    else if (element.classList.contains('bishop'))
-        return 'bishop';
-    else
-        return 'pawn';
 }
 
 let turn = 0;

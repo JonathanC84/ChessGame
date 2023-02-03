@@ -38,6 +38,10 @@ td button {
     cursor: pointer;
 }
 
+.touchable {
+    color: red;
+}
+
 tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
 	background: rgb(148, 105, 59);
 }
