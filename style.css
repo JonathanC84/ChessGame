@@ -24,10 +24,6 @@ td {
     color: brown;
 }
 
-.selected:hover {
-    color: brown;
-}
-
 td button {
     padding: 0;
     height: 100%;
@@ -37,7 +33,7 @@ td button {
     border: none;
 }
 
-button:hover {
+.selectable:hover {
     color: red;
     cursor: pointer;
 }

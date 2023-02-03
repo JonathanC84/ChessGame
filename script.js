@@ -1,9 +1,12 @@
 window.onload;
 
-const chessBoard = [
-    ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
-    [1, 2, 3, 4, 5, 6, 7, 8]
-];
+const length = 64;
+
+const chessBoard = Array(length).fill(0);
+
+for (let i = 0; i < length; i++) {
+    chessBoard[i] = i+1;
+}
 
 const whitePieces = {
     pawn: '&#x2659;',
@@ -23,109 +26,90 @@ const blackPieces = {
     king: '&#x265A;'
 };
 
-// fonctions et boucles qui "placent" les pièces blanches et noires sur le plateau (classes css 'white' et 'black')
-// ainsi que les cases vides (classe 'empty')
-
-function disposeWhitePiece(row, col, piece) {
-    const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
-    const squareClass = document.querySelector(`td.${square}`);
-    const squareButton = document.createElement('button');
-    squareButton.innerHTML = whitePieces[piece];
-    squareButton.classList.add('white');
-    squareButton.classList.add(piece);
-    squareClass.appendChild(squareButton);
-}
-
-function disposeBlackPiece(row, col, piece) {
-    const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
-    const squareClass = document.querySelector(`td.${square}`);
-    const squareButton = document.createElement('button');
-    squareButton.innerHTML = blackPieces[piece];
-    squareButton.classList.add('black');
-    squareButton.classList.add(piece);
-    squareClass.appendChild(squareButton);
-}
-
-function makeEmpty(row, col) {
-    const square = `${chessBoard[0][row]}${chessBoard[1][col]}`;
-    const squareClass = document.querySelector(`td.${square}`);
-    squareClass.classList.add('empty');
-}
-
-for (let row = 0; row <= 1; row++) {
-    for (let col = 0; col < 8; col++) {
-        if (row === 0) {
-            if (col === 0 || col === 7)
-                disposeWhitePiece(row, col, 'rook');
-            else if (col === 1 || col === 6)
-                disposeWhitePiece(row, col, 'knight');
-            else if (col === 2 || col === 5)
-                disposeWhitePiece(row, col, 'bishop');
-            else if (col === 3)
-                disposeWhitePiece(row, col, 'king');
-            else
-                disposeWhitePiece(row, col, 'queen');
+function arrangeBoard(squareIdArray, color, piece) {
+    for (let i = 0; i < squareIdArray.length; i++) {
+        const square = document.getElementById(squareIdArray[i]);
+        const squareButton = document.createElement('button');
+        squareButton.innerHTML = color[piece];
+        if (color == whitePieces) {
+            squareButton.classList.add('white');
         } else {
-            disposeWhitePiece(row, col, 'pawn');
+            squareButton.classList.add('black');
         }
+        squareButton.classList.add(piece);
+        square.appendChild(squareButton);
     }
 }
 
-for (let row = 2; row <= 5; row++) {
-    for (let col = 0; col < 8; col++) {
-        makeEmpty(row, col);
+function makeEmpty(squareIdArray) {
+    for (let i = 0; i < squareIdArray.length; i++) {
+        const square = document.getElementById(squareIdArray[i]);
+        square.classList.add('empty');
     }
 }
 
-for (let row = 7; row >= 6; row--) {
-    for (let col = 0; col < 8; col++) {
-        if (row === 7) {
-            if (col === 0 || col === 7)
-                disposeBlackPiece(row, col, 'rook');
-            else if (col === 1 || col === 6)
-                disposeBlackPiece(row, col, 'knight');
-            else if (col === 2 || col === 5)
-                disposeBlackPiece(row, col, 'bishop');
-            else if (col === 3)
-                disposeBlackPiece(row, col, 'king');
-            else
-                disposeBlackPiece(row, col, 'queen');
-        } else {
-            disposeBlackPiece(row, col, 'pawn');
-        }
-    }
+arrangeBoard([1, 8], whitePieces, 'rook');
+arrangeBoard([2, 7], whitePieces, 'knight');
+arrangeBoard([3, 6], whitePieces, 'bishop');
+arrangeBoard([4], whitePieces, 'king');
+arrangeBoard([5], whitePieces, 'queen');
+arrangeBoard([9, 10, 11, 12, 13, 14, 15, 16], whitePieces, 'pawn');
+
+arrangeBoard([57, 64], blackPieces, 'rook');
+arrangeBoard([58, 63], blackPieces, 'knight');
+arrangeBoard([59, 62], blackPieces, 'bishop');
+arrangeBoard([60], blackPieces, 'king');
+arrangeBoard([61], blackPieces, 'queen');
+arrangeBoard([49, 50, 51, 52, 53, 54, 55, 56], blackPieces, 'pawn');
+
+const emptySquaresId = Array(32).fill(0);
+
+for (let i = 0; i < emptySquaresId.length; i++) {
+    emptySquaresId[i] = 17+i;
 }
 
-let turn = 0;
+makeEmpty(emptySquaresId);
 
 const whiteButton = document.querySelectorAll('.white');
 const blackButton = document.querySelectorAll('.black');
 
-
 function selectPiece (buttonObject) {
     buttonObject.forEach(element => {
+        element.classList.add('selectable');
         element.addEventListener('click', () => {
             buttonObject.forEach(element => {
                 element.classList.remove('selected');
             })
+            element.classList.remove('selectable');
             element.classList.add('selected');
-            movePiece(element);
+            switch (getPieceName(element)) {
+                case 'king': alert('king'); break;
+                case 'queen': alert('queen'); break;
+                case 'rook': alert('rook'); break;
+                case 'knight': alert('knight'); break;
+                case 'bishop': alert('bishop'); break;
+                case 'pawn': alert('pawn'); break;
+            }
         });
     });
 }
 
-function movePiece (piece) {
-    let type = piece.classList;
-    if (type.contains('pawn')) {
-        movePawn(piece);
-    }
+function getPieceName (element) {
+    if (element.classList.contains('king'))
+        return 'king';
+    else if (element.classList.contains('queen'))
+        return 'queen';
+    else if (element.classList.contains('rook'))
+        return 'rook';
+    else if (element.classList.contains('knight'))
+        return 'knight';
+    else if (element.classList.contains('bishop'))
+        return 'bishop';
+    else
+        return 'pawn';
 }
 
-function movePawn (pawn) {
-    let location = [pawn.parentElement.classList[0][0], pawn.parentElement.classList[0][1]];
-    console.log(location);
-}
-
+let turn = 0;
 
 while (turn != -1) {
     if (turn % 2 == 0) {
