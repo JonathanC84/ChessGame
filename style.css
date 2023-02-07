@@ -39,7 +39,12 @@ td button {
 }
 
 .touchable {
+    color: brown;
+}
+
+.touchable:hover {
     color: red;
+    cursor: pointer;
 }
 
 tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
