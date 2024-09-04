@@ -15,8 +15,8 @@ public class ChessBoard {
         // Rooks
         board[0][0] = new Rook(PieceColor.BLACK, new Position(0, 0));
         board[0][7] = new Rook(PieceColor.BLACK, new Position(0, 7));
-        board[7][0] = new Rook(PieceColor.BLACK, new Position(7, 0));
-        board[7][7] = new Rook(PieceColor.BLACK, new Position(7, 7));
+        board[7][0] = new Rook(PieceColor.WHITE, new Position(7, 0));
+        board[7][7] = new Rook(PieceColor.WHITE, new Position(7, 7));
         // Knights
         board[0][1] = new Knight(PieceColor.BLACK, new Position(0, 1));
         board[0][6] = new Knight(PieceColor.BLACK, new Position(0, 6));

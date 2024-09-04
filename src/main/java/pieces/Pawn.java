@@ -17,15 +17,15 @@ public class Pawn extends Piece {
 
         boolean isStartingPosition = (isWhite() && position.getRow() == 6) || (!isWhite() && position.getRow() == 1);
         boolean isMiddleRowEmpty = board[position.getRow() + direction][position.getColumn()] == null;
-        boolean isDestinationEmpty = board[newPosition.getRow()][newPosition.getColumn()] == null;
-        boolean isDestinationCapturable = board[newPosition.getRow()][newPosition.getColumn()].color != this.color;
 
-        if (isDestinationEmpty) {
-            if (colDiff == 0) {
-                return rowDiff == 1 || (rowDiff == 2 && isStartingPosition && isMiddleRowEmpty);
-            }
-        } else return Math.abs(colDiff) == 1 && rowDiff == 1 && isDestinationCapturable;
+        Piece destinationPiece = board[newPosition.getRow()][newPosition.getColumn()];
 
-        return false;
+        if (destinationPiece == null && colDiff == 0) {
+            return rowDiff == 1 || (rowDiff == 2 && isStartingPosition && isMiddleRowEmpty);
+        } else if (destinationPiece != null) {
+            return Math.abs(colDiff) == 1 && rowDiff == 1 && (destinationPiece.color != this.color);
+        } else {
+            return false;
+        }
     }
 }
