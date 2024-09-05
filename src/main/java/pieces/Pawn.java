@@ -12,6 +12,10 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isValidMove(Position newPosition, Piece[][] board) {
+        if (newPosition.equals(this.position)) {
+            return false;
+        }
+
         int rowDiff = (newPosition.getRow() - position.getRow()) * direction;
         int colDiff = newPosition.getColumn() - position.getColumn();
 

@@ -10,7 +10,11 @@ public class Rook extends Piece {
 
     @Override
     public boolean isValidMove(Position newPosition, Piece[][] board) {
+        if (newPosition.equals(this.position)) {
+            return false;
+        }
 
+        // Linear move
         if (position.getRow() == newPosition.getRow()) {
             int columnMoveStart = Math.min(position.getColumn(), newPosition.getColumn()) + 1;
             int columnMoveEnd = Math.max(position.getColumn(), newPosition.getColumn());
@@ -35,6 +39,8 @@ public class Rook extends Piece {
 
         if (destinationPiece == null) {
             return true;
-        } else return destinationPiece.getColor() != this.getColor();
+        } else {
+            return destinationPiece.getColor() != this.getColor();
+        }
     }
 }
