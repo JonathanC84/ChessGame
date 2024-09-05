@@ -35,10 +35,6 @@ public class Bishop extends Piece {
 
         Piece destinationPiece = board[newPosition.getRow()][newPosition.getColumn()];
 
-        if (destinationPiece == null) {
-            return true;
-        } else {
-            return destinationPiece.getColor() != this.getColor();
-        }
+        return destinationPiece == null || destinationPiece.getColor() != this.getColor();
     }
 }
